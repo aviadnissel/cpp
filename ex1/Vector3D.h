@@ -1,0 +1,4 @@
+#ifndef CPP_VECTOR3D_H
+#define CPP_VECTOR3D_H
+
+#endif //CPP_VECTOR3D_H
