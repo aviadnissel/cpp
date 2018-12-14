@@ -34,8 +34,8 @@ public:
 
     Vector3D operator-() const;
 
-    Vector3D& operator*=(int num);
-    Vector3D& operator/=(int num);
+    Vector3D& operator*=(double num);
+    Vector3D& operator/=(double num);
 
     double operator|(const Vector3D &other) const;
     double operator*(const Vector3D &other) const;

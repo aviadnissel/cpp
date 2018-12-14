@@ -64,7 +64,7 @@ Vector3D Vector3D::operator-() const
     return Vector3D(x, y, z);
 }
 
-Vector3D& Vector3D::operator*=(int num)
+Vector3D& Vector3D::operator*=(double num)
 {
     for(int i = 0; i < 3; i++)
     {
@@ -73,7 +73,7 @@ Vector3D& Vector3D::operator*=(int num)
     return *this;
 }
 
-Vector3D& Vector3D::operator/=(int num)
+Vector3D& Vector3D::operator/=(double num)
 {
     if (num == 0)
     {
