@@ -28,6 +28,9 @@ public:
 	Vector3D& operator+=(const Vector3D &other);
 	Vector3D& operator-=(const Vector3D &other);
 
+	Vector3D& operator+=(double num);
+	Vector3D& operator-=(double num);
+
 	Vector3D operator*(double num);
 	Vector3D operator/(double num);
 

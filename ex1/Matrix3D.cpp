@@ -245,6 +245,10 @@ std::ostream& operator<<(std::ostream &os, Matrix3D mat)
 	for(int i = 0; i < 3; i++)
 	{
 		os << mat[i];
+		if (i < 2)
+		{
+			os << std::endl;
+		}
 	}
 	// TODO Check format
 	return os;

@@ -56,6 +56,22 @@ Vector3D& Vector3D::operator-=(const Vector3D &other)
 	return this->operator+=(-other);
 }
 
+Vector3D& Vector3D::operator+=(double num)
+{
+	for(int i = 0; i < 3; i++)
+	{
+		coordinates[i] += num;
+	}
+	return *this;
+}
+
+Vector3D& Vector3D::operator-=(double num)
+{
+	// TODO strandatize
+	return this->operator+=(-num);
+}
+
+
 Vector3D Vector3D::operator-() const
 {
 	double x = -coordinates[X];
@@ -187,6 +203,10 @@ std::ostream& operator<<(std::ostream &os, Vector3D vec)
 	for(int i = 0; i < 3; i++)
 	{
 		os << vec[i];
+		if ( i < 2)
+		{
+			os << " ";
+		}
 	}
 	// TODO Check format
 	return os;

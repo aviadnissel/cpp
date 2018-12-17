@@ -24,7 +24,7 @@ bool testMatrixClass = true;
 
 int numOfErrors = 0;
 
-int check(std::stringstream& buffer, const std::string &answer, const std::string &tested)
+void check(std::stringstream& buffer, const std::string &answer, const std::string &tested)
 {
 	if(buffer.str() != answer)
 	{
@@ -43,6 +43,7 @@ int check(std::stringstream& buffer, const std::string &answer, const std::strin
 	}
 	buffer.str(std::string());
 	buffer.clear();
+	
 }
 
 std::string getString(Vector3D& vector)
