@@ -126,10 +126,10 @@ double Vector3D::operator^(const Vector3D &other) const
 	double cosDeg;
 	double deg;
 
-	cosDeg = *this | other;
+	cosDeg = *this * other;
 	cosDeg /= (this->norm() * other.norm());
 	deg = acos(cosDeg);
-	return (deg * M_PI) / 180;
+	return deg;
 }
 
 Vector3D& Vector3D::operator=(const Vector3D &other)
