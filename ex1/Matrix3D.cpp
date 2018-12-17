@@ -221,8 +221,8 @@ double Matrix3D::determinant() const
 	{
 		sign = pow(-1, i);
 		curValue = firstRow[i];
-		nextCell = (i + 1) % 2;
-		doubleNextCell = (i + 2) % 2;
+		nextCell = std::min((i + 1) % 3, (i + 2) % 3);
+		doubleNextCell = std::max((i + 1) % 3, (i + 2) % 3);
 		smallDeterminant = secondRow[nextCell] * thirdRow[doubleNextCell];
 		smallDeterminant -= secondRow[doubleNextCell] * thirdRow[nextCell];
 		determinant += sign * curValue * smallDeterminant;

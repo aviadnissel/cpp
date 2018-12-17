@@ -5,13 +5,7 @@
 
 int main()
 {
-	Vector3D f;
-        std::streambuf* orig = std::cin.rdbuf();
-        std::istringstream input("5 4 3");
-        std::cin.rdbuf(input.rdbuf());
-        std::cin >> f;
-        std::cin.rdbuf(orig);
-	std::cout << f[0] << std::endl;
-        std::cout << f << std::endl;
+	Matrix3D m(6, 1, 1, 4, -2, 5, 2, 8, 7);
+        std::cout << m.determinant() << std::endl;
 	return 0;
 }
