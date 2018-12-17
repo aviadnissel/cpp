@@ -1,0 +1,8 @@
+a.norm = 6.16441
+a.dist(b) = 6.48074
+Matrix m =
+3 2 5
+7 1 0
+5 1 4
+m.determinant = -34
+m*a = 38 23 37
