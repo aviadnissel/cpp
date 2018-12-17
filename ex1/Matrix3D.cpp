@@ -163,3 +163,90 @@ Vector3D Matrix3D::operator*(const Vector3D &other) const
     }
     return newVector;
 }
+
+Matrix3D& Matrix3D::operator=(const Matrix3D &other)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        vectors[i] = other.vectors[i];
+    }
+    return *this;
+}
+
+Vector3D Matrix3D::operator[](int i) const
+{
+    return vectors[i];
+}
+Vector3D& Matrix3D::operator[](int i)
+{
+    return vectors[i];
+}
+
+Vector3D Matrix3D::row(short row) const
+{
+    return vectors[row];
+}
+Vector3D Matrix3D::column(short column) const
+{
+    Vector3D newVector;
+    for(int i = 0; i < 3; i++)
+    {
+        newVector[i] = vectors[i][column];
+    }
+    return newVector;
+}
+
+double Matrix3D::trace() const
+{
+    double trace = 0;
+    for(int i = 0; i < 3; i++)
+    {
+        trace += vectors[i][i];
+    }
+    return trace;
+}
+
+double Matrix3D::determinant() const
+{
+    double determinant = 0;
+    double sign;
+    double curValue;
+    double smallDeterminant;
+    int nextCell;
+    int doubleNextCell;
+    Vector3D firstRow = row(0);
+    Vector3D secondRow = row(1);
+    Vector3D thirdRow = row(2);
+
+    for(int i = 0; i < 3; i++)
+    {
+        sign = pow(-1, i);
+        curValue = firstRow[i];
+        nextCell = (i + 1) % 2;
+        doubleNextCell = (i + 2) % 2;
+        smallDeterminant = secondRow[nextCell] * thirdRow[doubleNextCell];
+        smallDeterminant -= secondRow[doubleNextCell] * thirdRow[nextCell];
+        determinant += sign * curValue * smallDeterminant;
+    }
+    return determinant;
+}
+
+std::istream& operator>>(std::istream &is, Matrix3D &mat)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        is >> mat[i];
+    }
+    return is;
+}
+
+
+std::ostream& operator<<(std::ostream &os, Matrix3D &mat)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        os << mat[i];
+    }
+    // TODO Check format
+    return os;
+}

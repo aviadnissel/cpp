@@ -45,7 +45,7 @@ public:
     Vector3D& operator[](int i);
 
     Vector3D row(short row) const;
-    Vector3D column(short row) const;
+    Vector3D column(short column) const;
     double trace() const;
     double determinant() const;
 };

@@ -171,6 +171,7 @@ Vector3D operator*(double num, Vector3D origin)
 {
     return origin * num;
 }
+
 std::istream& operator>>(std::istream &is, Vector3D &vec)
 {
     for(int i = 0; i < 3; i++)
