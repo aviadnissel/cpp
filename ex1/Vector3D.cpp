@@ -99,7 +99,7 @@ Vector3D& Vector3D::operator/=(double num)
 }
 
 
-Vector3D Vector3D::operator*(double num)
+Vector3D Vector3D::operator*(double num) const
 {
 	Vector3D newVector(*this);
 	for(int i = 0; i < 3; i++)
@@ -109,7 +109,7 @@ Vector3D Vector3D::operator*(double num)
 	return newVector;
 }
 
-Vector3D Vector3D::operator/(double num)
+Vector3D Vector3D::operator/(double num) const
 {
 	if (num == 0)
 	{
@@ -183,12 +183,12 @@ double Vector3D::dist(const Vector3D& other) const
 	return *this | other;
 }
 
-Vector3D operator*(double num, Vector3D origin)
+Vector3D operator*(double num, const Vector3D &origin)
 {
 	return origin * num;
 }
 
-std::istream& operator>>(std::istream &is, Vector3D vec)
+std::istream& operator>>(std::istream &is, Vector3D& vec)
 {
 	for(int i = 0; i < 3; i++)
 	{
@@ -198,7 +198,7 @@ std::istream& operator>>(std::istream &is, Vector3D vec)
 }
 
 
-std::ostream& operator<<(std::ostream &os, Vector3D vec)
+std::ostream& operator<<(std::ostream &os, const Vector3D &vec)
 {
 	for(int i = 0; i < 3; i++)
 	{

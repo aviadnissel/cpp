@@ -230,7 +230,7 @@ double Matrix3D::determinant() const
 	return determinant;
 }
 
-std::istream& operator>>(std::istream &is, Matrix3D mat)
+std::istream& operator>>(std::istream &is, Matrix3D &mat)
 {
 	for(int i = 0; i < 3; i++)
 	{
@@ -240,14 +240,14 @@ std::istream& operator>>(std::istream &is, Matrix3D mat)
 }
 
 
-std::ostream& operator<<(std::ostream &os, Matrix3D mat)
+std::ostream& operator<<(std::ostream &os, const Matrix3D &mat)
 {
 	for(int i = 0; i < 3; i++)
 	{
 		os << mat[i];
 		if (i < 2)
 		{
-			os << std::endl;
+			os << std::endl; // TODO yuck
 		}
 	}
 	// TODO Check format

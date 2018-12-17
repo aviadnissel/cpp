@@ -31,8 +31,8 @@ public:
 	Vector3D& operator+=(double num);
 	Vector3D& operator-=(double num);
 
-	Vector3D operator*(double num);
-	Vector3D operator/(double num);
+	Vector3D operator*(double num) const;
+	Vector3D operator/(double num) const;
 
 
 	Vector3D operator-() const;
@@ -52,11 +52,13 @@ public:
 	double norm() const;
 	double dist(const Vector3D& other) const;
 
+	friend std::istream& operator>>(std::istream &is, Vector3D &vec);
+	friend std::ostream& operator<<(std::ostream &os, const Vector3D &vec);
+
+	friend Vector3D operator*(double num, const Vector3D &origin);
+
 };
 
-Vector3D operator*(double num, Vector3D origin);
-std::istream& operator>>(std::istream &is, Vector3D vec);
-std::ostream& operator<<(std::ostream &os, Vector3D vec);
 
 
 #endif

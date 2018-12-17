@@ -48,10 +48,12 @@ public:
 	Vector3D column(short column) const;
 	double trace() const;
 	double determinant() const;
+
+	friend std::istream& operator>>(std::istream &is, Matrix3D &mat);
+	friend std::ostream& operator<<(std::ostream &os, const Matrix3D &mat);
+
 };
 
 
-std::istream& operator>>(std::istream &is, Matrix3D mat);
-std::ostream& operator<<(std::ostream &os, Matrix3D mat);
 
 #endif
