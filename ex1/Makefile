@@ -3,10 +3,7 @@ CCFLAGS = -c -Wall -Wextra
 LDFLAGS = -lm
 
 # add your .c files here  (no file suffixes)
-#CLASSES = Vector3D Matrix3D ex1
-CLASSES = Vector3D Matrix3D vector3d_tests
-#CLASSES = Vector3D Matrix3D tester
-#CLASSES = Vector3D Matrix3D mytest
+CLASSES = Vector3D Matrix3D ex1
 
 # Prepare object and source file list using pattern substitution func.
 OBJS = $(patsubst %, %.o,  $(CLASSES))
