@@ -54,7 +54,7 @@ Vector3D::Vector3D(const Vector3D &other)
  */
 Vector3D Vector3D::operator+(const Vector3D &other) const
 {
-	Vector3D newVector(this->coordinates);
+	Vector3D newVector(coordinates);
 	for (int i = 0; i < 3; i++)
 	{
 		newVector[i] += other[i];
@@ -67,7 +67,7 @@ Vector3D Vector3D::operator+(const Vector3D &other) const
  */
 Vector3D Vector3D::operator-(const Vector3D &other) const
 {
-	return this->operator+(-other);
+	return this + (-other);
 }
 
 /**
@@ -87,7 +87,7 @@ Vector3D& Vector3D::operator+=(const Vector3D &other)
  */
 Vector3D& Vector3D::operator-=(const Vector3D &other)
 {
-	return this->operator+=(-other);
+	return *this += (-other);
 }
 
 /**
@@ -107,8 +107,7 @@ Vector3D& Vector3D::operator+=(double num)
  */
 Vector3D& Vector3D::operator-=(double num)
 {
-	// TODO strandatize
-	return this->operator+=(-num);
+	return *this +=(-num);
 }
 
 /**
@@ -129,7 +128,7 @@ Vector3D& Vector3D::operator*=(double num)
 {
 	for(int i = 0; i < 3; i++)
 	{
-		(*this)[i] *= num;
+		coordinates[i] *= num;
 	}
 	return *this;
 }
@@ -141,7 +140,7 @@ Vector3D& Vector3D::operator/=(double num)
 {
 	if (num == 0)
 	{
-		return *this; // TODO ??
+		return *this;
 	}
 	return *this *= (1 / num);
 }
@@ -207,7 +206,7 @@ double Vector3D::operator^(const Vector3D &other) const
 	double deg;
 
 	cosDeg = *this * other;
-	cosDeg /= (this->norm() * other.norm());
+	cosDeg /= (norm() * other.norm());
 	deg = acos(cosDeg);
 	return deg;
 }
@@ -255,7 +254,7 @@ double Vector3D::norm() const
 /**
  * See header.
  */
-double Vector3D::dist(const Vector3D& other) const
+double Vector3D::dist(const Vector3D &other) const
 {
 	return *this | other;
 }
@@ -271,7 +270,7 @@ Vector3D operator*(double num, const Vector3D &origin)
 /**
  * See header.
  */
-std::istream& operator>>(std::istream &is, Vector3D& vec)
+std::istream& operator>>(std::istream &is, Vector3D &vec)
 {
 	for(int i = 0; i < 3; i++)
 	{

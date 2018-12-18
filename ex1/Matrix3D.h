@@ -71,7 +71,7 @@ public:
 	 * @param vectorTwo Second row.
 	 * @param vectorThree Third row.
 	 */
-	Matrix3D(const Vector3D& vectorOne, const Vector3D& vectorTwo, const Vector3D& vectorThree);
+	Matrix3D(const Vector3D &vectorOne, const Vector3D &vectorTwo, const Vector3D &vectorThree);
 
 	/**
 	 * Copy constructor.

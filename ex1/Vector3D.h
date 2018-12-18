@@ -23,7 +23,6 @@
 /** Default value for the vector cells. */
 #define DEFAULT_VALUE 0
 
-// TODO Where should the & go
 
 /**
  * A vector with 3 cells.
@@ -217,7 +216,7 @@ public:
 	 * @param other The other vector.
 	 * @return The distance.
 	 */
-	double dist(const Vector3D& other) const;
+	double dist(const Vector3D &other) const;
 
 	/**
 	 * >> operator.

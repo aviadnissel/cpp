@@ -168,7 +168,6 @@ Matrix3D Matrix3D::operator-(const Matrix3D &other) const
  */
 Matrix3D Matrix3D::operator*(const Matrix3D &other) const
 {
-	// TODO use * Vector3D
 	Matrix3D newMatrix;
 	for(int i = 0; i < 3; i++)
 	{
