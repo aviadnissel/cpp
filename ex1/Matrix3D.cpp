@@ -317,14 +317,14 @@ std::istream& operator>>(std::istream &is, Matrix3D &mat)
  */
 std::ostream& operator<<(std::ostream &os, const Matrix3D &mat)
 {
-    bool firstRun = true;
+	bool firstRun = true;
 	for(int i = 0; i < 3; i++)
 	{
-	    if(!firstRun)
-        {
-	        os << std::endl;
-        }
-	    firstRun = false;
+		if(!firstRun)
+		{
+			os << std::endl;
+		}
+		firstRun = false;
 		os << mat[i];
 	}
 	return os;

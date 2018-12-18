@@ -13,13 +13,13 @@
  */
 class Matrix3D {
 private:
-    /** The matrix's vectors. */
+	/** The matrix's vectors. */
 	Vector3D vectors[3];
 
 public:
-    /**
-     * Default constructor. Constructs with zeroes.
-     */
+	/**
+	 * Default constructor. Constructs with zeroes.
+	 */
 	Matrix3D();
 
 	/**
@@ -78,20 +78,20 @@ public:
 
 	/**
 	 * Adds other matrix to this matrix, cell by cell.
-     * Saves the result to this matrix.
+	 * Saves the result to this matrix.
 	 *
 	 * @param other The matrix to add.
 	 * @return A reference to this matrix after change.
 	 */
 	Matrix3D& operator+=(const Matrix3D &other);
 
-    /**
-     * Subtracts other matrix from this matrix, cell by cell.
-     * Saves the result to this matrix.
-     *
-     * @param other The matrix to subtract.
-     * @return A reference to this matrix after change.
-     */
+	/**
+	 * Subtracts other matrix from this matrix, cell by cell.
+	 * Saves the result to this matrix.
+	 *
+	 * @param other The matrix to subtract.
+	 * @return A reference to this matrix after change.
+	 */
 	Matrix3D& operator-=(const Matrix3D &other);
 
 	/**
@@ -102,54 +102,54 @@ public:
 	Matrix3D operator-() const;
 
 	/**
-     * Multiplies other matrix by this matrix, cell by cell.
-     * Saves the result to this matrix.
-     *
-     * @param other The matrix to multiply.
-     * @return A reference to this matrix after change.
+	 * Multiplies other matrix by this matrix, cell by cell.
+	 * Saves the result to this matrix.
+	 *
+	 * @param other The matrix to multiply.
+	 * @return A reference to this matrix after change.
 	 */
 	Matrix3D& operator*=(const Matrix3D &other);
 
-    /**
-     * Adds this matrix to the other matrix
-     *
-     * @param other The matrix to add.
-     * @return A new, result matrix.
-     */
+	/**
+	 * Adds this matrix to the other matrix
+	 *
+	 * @param other The matrix to add.
+	 * @return A new, result matrix.
+	 */
 	Matrix3D operator+(const Matrix3D &other) const;
 
-    /**
-     * Subtracts this matrix from the other matrix
-     *
-     * @param other The matrix to subtract.
-     * @return A new, result matrix.
-     */
+	/**
+	 * Subtracts this matrix from the other matrix
+	 *
+	 * @param other The matrix to subtract.
+	 * @return A new, result matrix.
+	 */
 	Matrix3D operator-(const Matrix3D &other) const;
 
-    /**
-     * Multiplies this matrix with the other matrix
-     *
-     * @param other The matrix to multiply.
-     * @return A new, result matrix.
-     */
+	/**
+	 * Multiplies this matrix with the other matrix
+	 *
+	 * @param other The matrix to multiply.
+	 * @return A new, result matrix.
+	 */
 	Matrix3D operator*(const Matrix3D &other) const;
 
 	/**
 	 * Multiplies each cell of this matrix with given number.
-     * Saves the result to this matrix.
-     *
+	 * Saves the result to this matrix.
+	 *
 	 * @param num The number to multiply.
 	 * @return A reference to this matrix after change.
 	 */
 	Matrix3D& operator*=(double num);
 
-    /**
-     * Divides each cell of this matrix with given number.
-     * Saves the result to this matrix.
-     *
-     * @param num The number to multiply.
-     * @return A reference to this matrix after change. No changes are made if num is zero.
-     */
+	/**
+	 * Divides each cell of this matrix with given number.
+	 * Saves the result to this matrix.
+	 *
+	 * @param num The number to multiply.
+	 * @return A reference to this matrix after change. No changes are made if num is zero.
+	 */
 	Matrix3D& operator/=(double num);
 
 	/**
@@ -168,12 +168,12 @@ public:
 	 */
 	Matrix3D& operator=(const Matrix3D &other);
 
-    /**
-     * Const access operator.
-     *
-     * @param i The row to return.
-     * @return A copy of the ith row.
-     */
+	/**
+	 * Const access operator.
+	 *
+	 * @param i The row to return.
+	 * @return A copy of the ith row.
+	 */
 	Vector3D operator[](int i) const;
 
 	/**
@@ -222,13 +222,13 @@ public:
 	 */
 	friend std::istream& operator>>(std::istream &is, Matrix3D &mat);
 
-    /**
-     * << operator.
-     *
-     * @param is The output stream.
-     * @param mat The matrix.
-     * @return Reference to the original output stream.
-     */
+	/**
+	 * << operator.
+	 *
+	 * @param is The output stream.
+	 * @param mat The matrix.
+	 * @return Reference to the original output stream.
+	 */
 	friend std::ostream& operator<<(std::ostream &os, const Matrix3D &mat);
 
 };

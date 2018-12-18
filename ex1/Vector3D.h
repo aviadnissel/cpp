@@ -58,23 +58,23 @@ public:
 	Vector3D(const Vector3D &other);
 
 	/**
-     * Adds this vector to the other vector.
-     *
-     * @param other The vector to add.
-     * @return A new, result matrix.
-     */
+	 * Adds this vector to the other vector.
+	 *
+	 * @param other The vector to add.
+	 * @return A new, result matrix.
+	 */
 	Vector3D operator+(const Vector3D &other) const;
 
 	/**
-     * Subtracts this vector from the other vector.
-     *
-     * @return A new, result vector.
-     */
+	 * Subtracts this vector from the other vector.
+	 *
+	 * @return A new, result vector.
+	 */
 	Vector3D operator-(const Vector3D &other) const;
 
 	/**
 	 * Adds other vector to this vector, cell by cell.
-     * Saves the result to this vector.
+	 * Saves the result to this vector.
 	 *
 	 * @param other The vector to add.
 	 * @return A reference to this vector after change.
@@ -83,7 +83,7 @@ public:
 
 	/**
 	 * Subtracts other vector from this vector, cell by cell.
-     * Saves the result to this vector.
+	 * Saves the result to this vector.
 	 *
 	 * @param other The vector to subtract.
 	 * @return A reference to this vector after change.
@@ -92,7 +92,7 @@ public:
 
 	/**
 	 * Adds the given number to each cell of the vector.
-     * Saves the result to this vector.
+	 * Saves the result to this vector.
 	 *
 	 * @param other The number to add.
 	 * @return A reference to this vector after change.
@@ -101,7 +101,7 @@ public:
 
 	/**
 	 * Subtracts the given number from each cell of the vector.
-     * Saves the result to this vector.
+	 * Saves the result to this vector.
 	 *
 	 * @param other The number to subtract.
 	 * @return A reference to this vector after change.
@@ -109,19 +109,19 @@ public:
 	Vector3D& operator-=(double num);
 
 	/**
-     * Multiplies this vector with the given number, cell by cell
-     *
-     * @param num The number to multiply.
-     * @return A new, result vector.
-     */
+	 * Multiplies this vector with the given number, cell by cell
+	 *
+	 * @param num The number to multiply.
+	 * @return A new, result vector.
+	 */
 	Vector3D operator*(double num) const;
 
 	/**
-     * Divides this vector from the other vector.
-     *
-     * @param The number to divide.
-     * @return A new, result vector. If num is zero, returns vector without change.
-     */
+	 * Divides this vector from the other vector.
+	 *
+	 * @param The number to divide.
+	 * @return A new, result vector. If num is zero, returns vector without change.
+	 */
 	Vector3D operator/(double num) const;
 
 	/**
@@ -133,8 +133,8 @@ public:
 
 	/**
 	 * Multiplies each cell of this vector with given number.
-     * Saves the result to this vector.
-     *
+	 * Saves the result to this vector.
+	 *
 	 * @param num The number to multiply.
 	 * @return A reference to this vector after change.
 	 */
@@ -142,8 +142,8 @@ public:
 
 	/**
 	 * Divides each cell of this vector by given number.
-     * Saves the result to this vector.
-     *
+	 * Saves the result to this vector.
+	 *
 	 * @param num The number to divide.
 	 * @return A reference to this vector after change. If num is zero, returns vector without change.
 	 */
@@ -182,19 +182,19 @@ public:
 	Vector3D& operator=(const Vector3D &other);
 
 	/**
-     * Const access operator.
-     *
-     * @param i The cell to return.
-     * @return The value of the cell.
-     */
+	 * Const access operator.
+	 *
+	 * @param i The cell to return.
+	 * @return The value of the cell.
+	 */
 	double operator[](int i) const;
 
 	/**
-     * Access operator.
-     *
-     * @param i The cell to return.
-     * @return A reference to the value of the cell.
-     */
+	 * Access operator.
+	 *
+	 * @param i The cell to return.
+	 * @return A reference to the value of the cell.
+	 */
 	double& operator[](int i);
 
 	/**
@@ -222,12 +222,12 @@ public:
 	friend std::istream& operator>>(std::istream &is, Vector3D &vec);
 
 	/**
-     * << operator.
-     *
-     * @param is The output stream.
-     * @param mat The matrix.
-     * @return Reference to the original output stream.
-     */
+	 * << operator.
+	 *
+	 * @param is The output stream.
+	 * @param mat The matrix.
+	 * @return Reference to the original output stream.
+	 */
 	friend std::ostream& operator<<(std::ostream &os, const Vector3D &vec);
 
 	/**
