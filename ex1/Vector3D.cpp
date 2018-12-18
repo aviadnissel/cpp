@@ -161,7 +161,7 @@ Vector3D Vector3D::operator/(double num) const
 	{
 		return *this;
 	}
-	return *this * (1/num);
+	return *this * (1 / num);
 }
 
 /**
