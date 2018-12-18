@@ -26,8 +26,8 @@ Matrix3D::Matrix3D(double num)
  * See header.
  */
 Matrix3D::Matrix3D(double num1, double num2, double num3,
-		 double num4, double num5, double num6,
-		 double num7, double num8, double num9)
+				   double num4, double num5, double num6,
+				   double num7, double num8, double num9)
 {
 	vectors[0][0] = num1;
 	vectors[0][1] = num2;
@@ -194,7 +194,7 @@ Matrix3D& Matrix3D::operator/=(double num)
 	{
 		return *this;
 	}
-	return *this *= (1/num);
+	return *this *= (1 / num);
 }
 
 /**

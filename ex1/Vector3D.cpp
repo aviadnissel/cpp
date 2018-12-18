@@ -13,7 +13,8 @@ Vector3D::Vector3D()
 /**
  * See header.
  */
-Vector3D::Vector3D(const double coordinates[3]) {
+Vector3D::Vector3D(const double coordinates[3])
+{
 	for (int i = 0; i < 3; i++)
 	{
 		this->coordinates[i] = coordinates[i];
@@ -135,7 +136,7 @@ Vector3D& Vector3D::operator/=(double num)
 	{
 		return *this; // TODO ??
 	}
-	return *this *= (1/num);
+	return *this *= (1 / num);
 }
 
 /**
@@ -169,7 +170,8 @@ Vector3D Vector3D::operator/(double num) const
 double Vector3D::operator|(const Vector3D &other) const
 {
 	double sum = 0;
-	for(int i = 0; i < 3; i++) {
+	for(int i = 0; i < 3; i++)
+	{
 		sum += pow((coordinates[i] - other[i]), 2);
 	}
 	return sqrt(sum);

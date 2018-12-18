@@ -11,7 +11,8 @@
 /**
  * A 3x3 matrix.
  */
-class Matrix3D {
+class Matrix3D
+{
 private:
 	/** The matrix's vectors. */
 	Vector3D vectors[3];
