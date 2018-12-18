@@ -1,5 +1,8 @@
 #include "Vector3D.h"
 
+/**
+ * See header.
+ */
 Vector3D::Vector3D()
 {
 	coordinates[X] = DEFAULT_VALUE;
@@ -7,6 +10,9 @@ Vector3D::Vector3D()
 	coordinates[Z] = DEFAULT_VALUE;
 }
 
+/**
+ * See header.
+ */
 Vector3D::Vector3D(const double coordinates[3]) {
 	for (int i = 0; i < 3; i++)
 	{
@@ -14,6 +20,9 @@ Vector3D::Vector3D(const double coordinates[3]) {
 	}
 }
 
+/**
+ * See header.
+ */
 Vector3D::Vector3D(double x, double y, double z)
 {
 	coordinates[X] = x;
@@ -21,6 +30,9 @@ Vector3D::Vector3D(double x, double y, double z)
 	coordinates[Z] = z;
 }
 
+/**
+ * See header.
+ */
 Vector3D::Vector3D(const Vector3D &other)
 {
 	for(int i = 0; i < 3; i++)
@@ -29,6 +41,9 @@ Vector3D::Vector3D(const Vector3D &other)
 	}
 }
 
+/**
+ * See header.
+ */
 Vector3D Vector3D::operator+(const Vector3D &other) const
 {
 	Vector3D newVector(this->coordinates);
@@ -38,11 +53,18 @@ Vector3D Vector3D::operator+(const Vector3D &other) const
 	}
 	return newVector;
 }
+
+/**
+ * See header.
+ */
 Vector3D Vector3D::operator-(const Vector3D &other) const
 {
 	return this->operator+(-other);
 }
 
+/**
+ * See header.
+ */
 Vector3D& Vector3D::operator+=(const Vector3D &other)
 {
 	for(int i = 0; i < 3; i++)
@@ -51,11 +73,18 @@ Vector3D& Vector3D::operator+=(const Vector3D &other)
 	}
 	return *this;
 }
+
+/**
+ * See header.
+ */
 Vector3D& Vector3D::operator-=(const Vector3D &other)
 {
 	return this->operator+=(-other);
 }
 
+/**
+ * See header.
+ */
 Vector3D& Vector3D::operator+=(double num)
 {
 	for(int i = 0; i < 3; i++)
@@ -65,13 +94,18 @@ Vector3D& Vector3D::operator+=(double num)
 	return *this;
 }
 
+/**
+ * See header.
+ */
 Vector3D& Vector3D::operator-=(double num)
 {
 	// TODO strandatize
 	return this->operator+=(-num);
 }
 
-
+/**
+ * See header.
+ */
 Vector3D Vector3D::operator-() const
 {
 	double x = -coordinates[X];
@@ -80,6 +114,9 @@ Vector3D Vector3D::operator-() const
 	return Vector3D(x, y, z);
 }
 
+/**
+ * See header.
+ */
 Vector3D& Vector3D::operator*=(double num)
 {
 	for(int i = 0; i < 3; i++)
@@ -89,6 +126,9 @@ Vector3D& Vector3D::operator*=(double num)
 	return *this;
 }
 
+/**
+ * See header.
+ */
 Vector3D& Vector3D::operator/=(double num)
 {
 	if (num == 0)
@@ -98,7 +138,9 @@ Vector3D& Vector3D::operator/=(double num)
 	return *this *= (1/num);
 }
 
-
+/**
+ * See header.
+ */
 Vector3D Vector3D::operator*(double num) const
 {
 	Vector3D newVector(*this);
@@ -109,6 +151,9 @@ Vector3D Vector3D::operator*(double num) const
 	return newVector;
 }
 
+/**
+ * See header.
+ */
 Vector3D Vector3D::operator/(double num) const
 {
 	if (num == 0)
@@ -118,6 +163,9 @@ Vector3D Vector3D::operator/(double num) const
 	return *this * (1/num);
 }
 
+/**
+ * See header.
+ */
 double Vector3D::operator|(const Vector3D &other) const
 {
 	double sum = 0;
@@ -127,6 +175,10 @@ double Vector3D::operator|(const Vector3D &other) const
 	return sqrt(sum);
 
 }
+
+/**
+ * See header.
+ */
 double Vector3D::operator*(const Vector3D &other) const
 {
 	double sum = 0;
@@ -137,6 +189,9 @@ double Vector3D::operator*(const Vector3D &other) const
 	return sum;
 }
 
+/**
+ * See header.
+ */
 double Vector3D::operator^(const Vector3D &other) const
 {
 	double cosDeg;
@@ -148,6 +203,9 @@ double Vector3D::operator^(const Vector3D &other) const
 	return deg;
 }
 
+/**
+ * See header.
+ */
 Vector3D& Vector3D::operator=(const Vector3D &other)
 {
 	if (this == &other)
@@ -161,33 +219,49 @@ Vector3D& Vector3D::operator=(const Vector3D &other)
 	return *this;
 }
 
-
+/**
+ * See header.
+ */
 double Vector3D::operator[](int i) const
 {
 	return coordinates[i];
 }
 
+/**
+ * See header.
+ */
 double& Vector3D::operator[](int i)
 {
-	// TODO Does this work?
 	return coordinates[i];
 }
 
+/**
+ * See header.
+ */
 double Vector3D::norm() const
 {
 	return *this | Vector3D(0, 0, 0);
 }
 
+/**
+ * See header.
+ */
 double Vector3D::dist(const Vector3D& other) const
 {
 	return *this | other;
 }
 
+/**
+ * See header.
+ */
 Vector3D operator*(double num, const Vector3D &origin)
 {
 	return origin * num;
 }
 
+/**
+ * See header.
+ */
 std::istream& operator>>(std::istream &is, Vector3D& vec)
 {
 	for(int i = 0; i < 3; i++)
@@ -197,17 +271,20 @@ std::istream& operator>>(std::istream &is, Vector3D& vec)
 	return is;
 }
 
-
+/**
+ * See header.
+ */
 std::ostream& operator<<(std::ostream &os, const Vector3D &vec)
 {
+	bool firstRun = true;
 	for(int i = 0; i < 3; i++)
 	{
-		os << vec[i];
-		if ( i < 2)
+		if(!firstRun)
 		{
 			os << " ";
 		}
+		firstRun = false;
+		os << vec[i];
 	}
-	// TODO Check format
 	return os;
 }

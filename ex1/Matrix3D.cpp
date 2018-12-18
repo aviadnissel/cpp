@@ -1,16 +1,16 @@
 #include "Matrix3D.h"
 
+/**
+ * See header.
+ */
 Matrix3D::Matrix3D()
 {
-	for(int i = 0; i < 3; i++)
-	{
-		for(int j = 0; j < 3; j++)
-		{
-			vectors[i][j] = 0;
-		}
-	}
+	// Nothing to do, since vector3d is initialized with default value.
 }
 
+/**
+ * See header.
+ */
 Matrix3D::Matrix3D(double num)
 {
 	for(int i = 0; i < 3; i++)
@@ -21,11 +21,14 @@ Matrix3D::Matrix3D(double num)
 		}
 	}
 }
+
+/**
+ * See header.
+ */
 Matrix3D::Matrix3D(double num1, double num2, double num3,
 		 double num4, double num5, double num6,
 		 double num7, double num8, double num9)
 {
-	// TODO Make it better
 	vectors[0][0] = num1;
 	vectors[0][1] = num2;
 	vectors[0][2] = num3;
@@ -37,9 +40,11 @@ Matrix3D::Matrix3D(double num1, double num2, double num3,
 	vectors[2][0] = num7;
 	vectors[2][1] = num8;
 	vectors[2][2] = num9;
-
 }
 
+/**
+ * See header.
+ */
 Matrix3D::Matrix3D(const double numbers[9])
 {
 	for(int i = 0; i < 3; i++)
@@ -51,6 +56,9 @@ Matrix3D::Matrix3D(const double numbers[9])
 	}
 }
 
+/**
+ * See header.
+ */
 Matrix3D::Matrix3D(const double numbers[3][3])
 {
 	for(int i = 0; i < 3; i++)
@@ -62,6 +70,9 @@ Matrix3D::Matrix3D(const double numbers[3][3])
 	}
 }
 
+/**
+ * See header.
+ */
 Matrix3D::Matrix3D(const Vector3D& vectorOne, const Vector3D& vectorTwo, const Vector3D& vectorThree)
 {
 	vectors[0] = vectorOne;
@@ -69,10 +80,16 @@ Matrix3D::Matrix3D(const Vector3D& vectorOne, const Vector3D& vectorTwo, const V
 	vectors[2] = vectorThree;
 }
 
+/**
+ * See header.
+ */
 Matrix3D::Matrix3D(const Matrix3D &other) : Matrix3D(other.vectors[0], other.vectors[1], other.vectors[2])
 {
 }
 
+/**
+ * See header.
+ */
 Matrix3D& Matrix3D::operator+=(const Matrix3D &other)
 {
 	for(int i = 0; i < 3; i++)
@@ -84,11 +101,18 @@ Matrix3D& Matrix3D::operator+=(const Matrix3D &other)
 	}
 	return *this;
 }
+
+/**
+ * See header.
+ */
 Matrix3D& Matrix3D::operator-=(const Matrix3D &other)
 {
 	return *this += -other;
 }
 
+/**
+ * See header.
+ */
 Matrix3D Matrix3D::operator-() const
 {
 	Matrix3D newMatrix;
@@ -102,12 +126,18 @@ Matrix3D Matrix3D::operator-() const
 	return newMatrix;
 }
 
+/**
+ * See header.
+ */
 Matrix3D& Matrix3D::operator*=(const Matrix3D &other)
 {
 	*this = *this * other;
 	return *this;
 }
 
+/**
+ * See header.
+ */
 Matrix3D Matrix3D::operator+(const Matrix3D &other) const
 {
 	Matrix3D newMatrix(*this);
@@ -117,10 +147,18 @@ Matrix3D Matrix3D::operator+(const Matrix3D &other) const
 	}
 	return newMatrix;
 }
+
+/**
+ * See header.
+ */
 Matrix3D Matrix3D::operator-(const Matrix3D &other) const
 {
 	return *this + (-other);
 }
+
+/**
+ * See header.
+ */
 Matrix3D Matrix3D::operator*(const Matrix3D &other) const
 {
 	// TODO use * Vector3D
@@ -135,6 +173,9 @@ Matrix3D Matrix3D::operator*(const Matrix3D &other) const
 	return newMatrix;
 }
 
+/**
+ * See header.
+ */
 Matrix3D& Matrix3D::operator*=(double num)
 {
 	for(int i = 0; i < 3; i++)
@@ -144,6 +185,9 @@ Matrix3D& Matrix3D::operator*=(double num)
 	return *this;
 }
 
+/**
+ * See header.
+ */
 Matrix3D& Matrix3D::operator/=(double num)
 {
 	if(num == 0)
@@ -153,6 +197,9 @@ Matrix3D& Matrix3D::operator/=(double num)
 	return *this *= (1/num);
 }
 
+/**
+ * See header.
+ */
 Vector3D Matrix3D::operator*(const Vector3D &other) const
 {
 	Vector3D newVector;
@@ -163,6 +210,9 @@ Vector3D Matrix3D::operator*(const Vector3D &other) const
 	return newVector;
 }
 
+/**
+ * See header.
+ */
 Matrix3D& Matrix3D::operator=(const Matrix3D &other)
 {
 	for(int i = 0; i < 3; i++)
@@ -172,19 +222,33 @@ Matrix3D& Matrix3D::operator=(const Matrix3D &other)
 	return *this;
 }
 
+/**
+ * See header.
+ */
 Vector3D Matrix3D::operator[](int i) const
 {
 	return vectors[i];
 }
+
+/**
+ * See header.
+ */
 Vector3D& Matrix3D::operator[](int i)
 {
 	return vectors[i];
 }
 
+/**
+ * See header.
+ */
 Vector3D Matrix3D::row(short row) const
 {
 	return vectors[row];
 }
+
+/**
+ * See header.
+ */
 Vector3D Matrix3D::column(short column) const
 {
 	Vector3D newVector;
@@ -195,6 +259,9 @@ Vector3D Matrix3D::column(short column) const
 	return newVector;
 }
 
+/**
+ * See header.
+ */
 double Matrix3D::trace() const
 {
 	double trace = 0;
@@ -205,6 +272,9 @@ double Matrix3D::trace() const
 	return trace;
 }
 
+/**
+ * See header.
+ */
 double Matrix3D::determinant() const
 {
 	double determinant = 0;
@@ -230,6 +300,9 @@ double Matrix3D::determinant() const
 	return determinant;
 }
 
+/**
+ * See header.
+ */
 std::istream& operator>>(std::istream &is, Matrix3D &mat)
 {
 	for(int i = 0; i < 3; i++)
@@ -239,17 +312,20 @@ std::istream& operator>>(std::istream &is, Matrix3D &mat)
 	return is;
 }
 
-
+/**
+ * See header.
+ */
 std::ostream& operator<<(std::ostream &os, const Matrix3D &mat)
 {
+    bool firstRun = true;
 	for(int i = 0; i < 3; i++)
 	{
+	    if(!firstRun)
+        {
+	        os << std::endl;
+        }
+	    firstRun = false;
 		os << mat[i];
-		if (i < 2)
-		{
-			os << std::endl; // TODO yuck
-		}
 	}
-	// TODO Check format
 	return os;
 }
