@@ -1,6 +1,9 @@
-//
-// Created by Avian on 14/12/2018.
-//
+/**
+ * @file Matrix3D.h
+ * @author Aviad Nissel <aviad.nissel@mail.huji.ac.il>
+ *
+ * A 3x3 matrix header file.
+ */
 
 #ifndef CPP_MATRIX3D_H
 #define CPP_MATRIX3D_H

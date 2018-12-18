@@ -1,3 +1,10 @@
+/**
+ * @file Vector3D.h
+ * @author Aviad Nissel <aviad.nissel@mail.huji.ac.il>
+ *
+ * A 3d vector header file.
+ */
+
 #ifndef CPP_VECTOR3D_H
 #define CPP_VECTOR3D_H
 

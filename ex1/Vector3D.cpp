@@ -1,3 +1,10 @@
+/**
+ * @file Vector3D.cpp
+ * @author Aviad Nissel <aviad.nissel@mail.huji.ac.il>
+ *
+ * A 3d vector implementation file.
+ */
+
 #include "Vector3D.h"
 
 /**

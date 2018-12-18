@@ -1,3 +1,10 @@
+/**
+ * @file Matrix3D.cpp
+ * @author Aviad Nissel <aviad.nissel@mail.huji.ac.il>
+ *
+ * A 3x3 matrix implementation file.
+ */
+
 #include "Matrix3D.h"
 
 /**
