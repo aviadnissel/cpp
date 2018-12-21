@@ -3,4 +3,4 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(cpp ex1/ex1.cpp ex1/Vector3D.cpp ex1/Matrix3D.cpp ex1/Matrix3D.h)
+add_executable(cpp ex2/ex2.cpp)
