@@ -296,3 +296,4 @@ std::ostream& operator<<(std::ostream &os, const Vector3D &vec)
 	}
 	return os;
 }
+
