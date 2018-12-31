@@ -1,6 +1,6 @@
 #include <iostream>
 #include <numeric>
-#include <map>
+#include <unordered_map>
 #include <math.h>
 #include <vector>
 #include <fstream>
@@ -8,14 +8,14 @@
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string.hpp>
 
-using std::map;
+using std::unordered_map;
 using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
 using std::pair;
 
-int getCountOrZero(map<string, int> countMap, string toSearch)
+int getCountOrZero(unordered_map<string, int> countMap, string toSearch)
 {
 	auto it = countMap.find(toSearch);
 	if (it != countMap.end())
@@ -24,9 +24,9 @@ int getCountOrZero(map<string, int> countMap, string toSearch)
 	}
 	return 0;
 }
-map<string, int> countWords(vector<string> words)
+unordered_map<string, int> countWords(vector<string> words)
 {
-	map<string, int> wordCount;
+	unordered_map<string, int> wordCount;
 	int count;
 	for(string word: words)
 	{
@@ -61,7 +61,34 @@ vector<string> readWords(const string &filename)
 	return words;
 }
 
-vector<int> createVector(const map<string, int> textCount, const vector<string> commonWords) // TODO rename
+unordered_map<string, int> readAndCountWords(const string &filename)
+{
+        std::ifstream inFile;
+        vector<string> words;
+        inFile.open(filename);
+        if(!inFile)
+        {
+                throw(std::runtime_error("Problem opening file")); // TODO More specific one?
+        }
+        string line;
+        string word;
+        boost::char_separator<char> sep("{.\" ,\n\r!;:'}");
+
+        boost::tokenizer<boost::char_separator<char>>::iterator tok_iter;
+	unordered_map<string, int> wordCount;
+        while(getline(inFile, line))
+        {
+                boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
+                for(tok_iter = tokens.begin(); tok_iter != tokens.end(); tok_iter++)
+                {
+                        word = boost::algorithm::to_lower_copy(*tok_iter);
+	                wordCount[word] = getCountOrZero(wordCount, word) + 1;
+                }
+        }
+        return wordCount;
+
+}
+vector<int> createVector(const unordered_map<string, int> textCount, const vector<string> commonWords) // TODO rename
 {
 	vector<int> wordVector;
 	for(string word: commonWords)
@@ -76,17 +103,17 @@ vector<int> createVector(const map<string, int> textCount, const vector<string> 
 double calculateAngle(vector<int> wordVector1, vector<int> wordVector2)
 {
 	double product = inner_product(wordVector1.begin(), wordVector1.end(), wordVector2.begin(), 0);
-	double norm = inner_product(wordVector1.begin(), wordVector1.end(), wordVector1.begin(), 0) * inner_product(wordVector2.begin(), wordVector2.end(), wordVector2.begin(), 0);
+	cout << product << endl;
+	double norm = sqrt(inner_product(wordVector1.begin(), wordVector1.end(), wordVector1.begin(), 0)) * sqrt(inner_product(wordVector2.begin(), wordVector2.end(), wordVector2.begin(), 0));
+	cout << norm << endl;
 	return product / norm;
 }
 
 vector<int> getTextVector(string fileName, vector<string> commonWords)
 {
-	cout << "reading words" << endl;
-        vector<string> textWords = readWords(fileName);
-	cout << "counting words" << endl;
-        map<string, int> textCount = countWords(textWords);
-	cout << "creating vector" << endl;
+/*        vector<string> textWords = readWords(fileName);
+        unordered_map<string, int> textCount = countWords(textWords);*/
+	unordered_map<string, int> textCount = readAndCountWords(fileName);
         return createVector(textCount, commonWords);
 }
 int main(int argc, char* argv[])
