@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <numeric>
 #include <unordered_map>
@@ -15,23 +16,13 @@ using std::cout;
 using std::endl;
 using std::pair;
 
-int getCountOrZero(unordered_map<string, int> countMap, string toSearch)
-{
-	auto it = countMap.find(toSearch);
-	if (it != countMap.end())
-	{
-		return it->second;
-	}
-	return 0;
-}
 unordered_map<string, int> countWords(vector<string> words)
 {
 	unordered_map<string, int> wordCount;
 	int count;
 	for(string word: words)
 	{
-		count = getCountOrZero(wordCount, word);
-		wordCount[word] = count + 1;
+		wordCount[word] += 1;
 	}
 	return wordCount;
 }
@@ -82,7 +73,7 @@ unordered_map<string, int> readAndCountWords(const string &filename)
                 for(tok_iter = tokens.begin(); tok_iter != tokens.end(); tok_iter++)
                 {
                         word = boost::algorithm::to_lower_copy(*tok_iter);
-	                wordCount[word] = getCountOrZero(wordCount, word) + 1;
+	                wordCount[word] += 1;
                 }
         }
         return wordCount;
@@ -93,7 +84,12 @@ vector<int> createVector(const unordered_map<string, int> textCount, const vecto
 	vector<int> wordVector;
 	for(string word: commonWords)
 	{
-		wordVector.push_back(getCountOrZero(textCount, word));
+		auto it = textCount.find(word);
+		int count = 0;
+		if (it != textCount.end()) {
+			count = it->second;
+		}
+		wordVector.push_back(count);
 	}
 	return wordVector;
 		
