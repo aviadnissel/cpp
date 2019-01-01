@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include <numeric>
-#include <unordered_map>
+#include <map>
 #include <math.h>
 #include <vector>
 #include <fstream>
@@ -9,17 +9,13 @@
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string.hpp>
 
-using std::unordered_map;
+using std::map;
 using std::vector;
 using std::string;
-using std::cout;
-using std::endl;
-using std::pair;
 
-unordered_map<string, int> countWords(vector<string> words)
+map<string, int> countWords(vector<string> words)
 {
-	unordered_map<string, int> wordCount;
-	int count;
+	map<string, int> wordCount;
 	for(string word: words)
 	{
 		wordCount[word] += 1;
@@ -48,14 +44,12 @@ vector<string> readWords(const string &filename)
 		{
 			word = boost::algorithm::to_lower_copy(*tok_iter);
 			words.push_back(word);
-	//		cout << word << " ";
 		}
 	}
-	//cout << endl;
 	return words;
 }
 
-vector<int> createVector(const unordered_map<string, int> textCount, const vector<string> commonWords) // TODO rename
+vector<int> createVector(const map<string, int> textCount, const vector<string> commonWords) // TODO rename
 {
 	vector<int> wordVector;
 	for(string word: commonWords)
@@ -81,9 +75,10 @@ double calculateAngle(vector<int> wordVector1, vector<int> wordVector2)
 vector<int> getTextVector(string fileName, vector<string> commonWords)
 {
         vector<string> textWords = readWords(fileName);
-        unordered_map<string, int> textCount = countWords(textWords);
+        map<string, int> textCount = countWords(textWords);
         return createVector(textCount, commonWords);
 }
+
 int main(int argc, char* argv[])
 {
 	if(argc < 4) // TODO const
@@ -96,18 +91,18 @@ int main(int argc, char* argv[])
 	vector<string> commonWords = readWords(argv[1]); // TODO const
 	vector<int> unknownTextVector = getTextVector(argv[2], commonWords);
 
-	pair<string, double> highestAngle = std::make_pair("start", -1);
+	std::pair<string, double> highestAngle = std::make_pair("start", -1);
 	for(int i = 3; i < argc; i++)
 	{
 		string fileName = argv[i];
 		vector<int> textVector = getTextVector(fileName, commonWords);
 		double textAngle = calculateAngle(textVector, unknownTextVector);
-		cout << fileName << " " << textAngle << endl;
+		std::cout << fileName << " " << textAngle << std::endl;
 		if (textAngle >= highestAngle.second)
 		{
-			highestAngle = make_pair(fileName, textAngle);
+			highestAngle = std::make_pair(fileName, textAngle);
 		}
 	}
-	cout << "Best matching author is " << highestAngle.first << " score " << highestAngle.second << endl;
+	std::cout << "Best matching author is " << highestAngle.first << " score " << highestAngle.second << std::endl;
 	return 0;
 }
