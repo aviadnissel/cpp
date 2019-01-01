@@ -26,6 +26,7 @@ unordered_map<string, int> countWords(vector<string> words)
 	}
 	return wordCount;
 }
+
 vector<string> readWords(const string &filename)
 {
 	std::ifstream inFile;
@@ -37,7 +38,7 @@ vector<string> readWords(const string &filename)
 	}
 	string line;
 	string word;
-	boost::char_separator<char> sep("{.\" ,\n\r!;:'}");
+	boost::char_separator<char> sep("\";:! ,\r\n");
 
 	boost::tokenizer<boost::char_separator<char>>::iterator tok_iter;
 	while(getline(inFile, line))
@@ -47,38 +48,13 @@ vector<string> readWords(const string &filename)
 		{
 			word = boost::algorithm::to_lower_copy(*tok_iter);
 			words.push_back(word);
+	//		cout << word << " ";
 		}
 	}
+	//cout << endl;
 	return words;
 }
 
-unordered_map<string, int> readAndCountWords(const string &filename)
-{
-        std::ifstream inFile;
-        vector<string> words;
-        inFile.open(filename);
-        if(!inFile)
-        {
-                throw(std::runtime_error("Problem opening file")); // TODO More specific one?
-        }
-        string line;
-        string word;
-        boost::char_separator<char> sep("{.\" ,\n\r!;:'}");
-
-        boost::tokenizer<boost::char_separator<char>>::iterator tok_iter;
-	unordered_map<string, int> wordCount;
-        while(getline(inFile, line))
-        {
-                boost::tokenizer<boost::char_separator<char>> tokens(line, sep);
-                for(tok_iter = tokens.begin(); tok_iter != tokens.end(); tok_iter++)
-                {
-                        word = boost::algorithm::to_lower_copy(*tok_iter);
-	                wordCount[word] += 1;
-                }
-        }
-        return wordCount;
-
-}
 vector<int> createVector(const unordered_map<string, int> textCount, const vector<string> commonWords) // TODO rename
 {
 	vector<int> wordVector;
@@ -95,21 +71,17 @@ vector<int> createVector(const unordered_map<string, int> textCount, const vecto
 		
 }
 
-
 double calculateAngle(vector<int> wordVector1, vector<int> wordVector2)
 {
 	double product = inner_product(wordVector1.begin(), wordVector1.end(), wordVector2.begin(), 0);
-	cout << product << endl;
 	double norm = sqrt(inner_product(wordVector1.begin(), wordVector1.end(), wordVector1.begin(), 0)) * sqrt(inner_product(wordVector2.begin(), wordVector2.end(), wordVector2.begin(), 0));
-	cout << norm << endl;
 	return product / norm;
 }
 
 vector<int> getTextVector(string fileName, vector<string> commonWords)
 {
-/*        vector<string> textWords = readWords(fileName);
-        unordered_map<string, int> textCount = countWords(textWords);*/
-	unordered_map<string, int> textCount = readAndCountWords(fileName);
+        vector<string> textWords = readWords(fileName);
+        unordered_map<string, int> textCount = countWords(textWords);
         return createVector(textCount, commonWords);
 }
 int main(int argc, char* argv[])
