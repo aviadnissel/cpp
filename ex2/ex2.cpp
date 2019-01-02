@@ -53,7 +53,7 @@ map<string, int> countWords(vector<string> words)
 	return wordCount;
 }
 
-/*
+/**
  * Reads the word from the given file.
  *
  * @param filepath The path of the file to read.
@@ -101,7 +101,8 @@ vector<int> createCommonWordsCountVector(const map<string, int> textCount, const
 	{
 		auto it = textCount.find(word);
 		int count = 0;
-		if (it != textCount.end()) {
+		if (it != textCount.end())
+		{
 			count = it->second;
 		}
 		wordVector.push_back(count);
@@ -110,7 +111,7 @@ vector<int> createCommonWordsCountVector(const map<string, int> textCount, const
 		
 }
 
-/*
+/**
  * A util function that calculates the angle between the two given vectors.
  *
  * @param wordVector1 The first vector.
