@@ -3,4 +3,6 @@ project(cpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(cpp ex2/ex2.cpp)
+
+add_executable(cpp ex3/Matrix.cpp)
+
