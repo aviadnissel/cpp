@@ -25,36 +25,33 @@ public:
 
 
 private:
-	vector<vector<T>> rows;
+	vector<T> values;
+	int cols;
 
 };
 
 template <class T>
 Matrix<T>::Matrix()
 {
-	vector<T> row;
-	row.push_back(T(0));
-	rows.push_back(row);
+	values.push_back(T(0));
+	cols = 1;
 }
 
 template <class T>
 Matrix<T>::Matrix(unsigned int rows, unsigned int cols)
 {
-	for(unsigned int i = 0; i < rows; i++)
+	for(unsigned int i = 0; i < rows * cols; i++)
 	{
-		vector<T> row;
-		for(unsigned int j = 0; j < cols; j++)
-		{
-			row.push_back(T(0));
-		}
-		this->rows.push_back(row);
+		values.push_back(T(0));
 	}
+	this->cols = cols;
 }
 
 template <class T>
 Matrix<T>::Matrix(const Matrix<T> &other)
 {
-	rows = other.rows;
+	cols = other.cols;
+	values = other.values;
 }
 
 template <class T>
@@ -65,54 +62,48 @@ Matrix<T>::Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells) 
 	// TODO is this the best way?
 	for (int i = 0; i < cells.size(); i++)
 	{
-		row = i % rows;
-		col = i - row;
-		this->rows[row][col] = cells[i];
+		values.push_back(cells.at(i));
 	}
+	this->cols = cols;
 }
 
 template <class T>
 Matrix<T>& Matrix<T>::operator=(const Matrix<T> &other)
 {
-	rows = other.rows;
+	cols = other.cols;
+	values = other.values;
 	return *this;
 }
 
 template <class T>
-Matrix<T> operator+(const Matrix<T> &other) const
+Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 {
-	int rowsSize = rows.size;
-	int colsSize = rows[0].size;
-	// TODO check for size 0?
-	if(other.rows.size != rowsSize || other.rows[0].size != colsSize)
+        // TODO check for size 0?
+        if(other.values.size() != values.size())
+        {
+                throw std::invalid_argument("Matrices sizes don't match");
+        }
+        int cols = other.cols;
+        int rows = other.values.size() / cols;
+	vector<T> newValues = values;
+	for(int i = 0; i < values.size(); i++)
 	{
-		throw std::invalid_argument("Matrices sizes don't match");
+		values.at(i) += other.values.at(i);
 	}
-	Matrix<T> newMatrix(rowsSize, colsSize);
-	for(int i = 0; i < rowsSize; i++)
-	{
-		for(int j = 0; j < colsSize; j++)
-		{
-			newMatrix(i, j) = (*this)(i, j) + other(i, j);
-		}
-	}
+	Matrix<T> newMatrix(rows, cols, newValues);
 	return newMatrix;
 }
-Matrix<T> operator+(const Matrix<T> &other) const
-{
 
-}
-Matrix<T> operator+(const Matrix<T> &other) const;
 template <class T>
 std::ostream& operator<<(std::ostream &os, const Matrix<T> &mat)
 {
-	for(vector<T> row: mat.rows)
+	for(unsigned long int i = 0; i < mat.values.size(); i++)
 	{
-		for(T cell: row)
+		std::cout << mat.values.at(i) << "\t";
+		if((i + 1) % mat.cols == 0)
 		{
-			std::cout << cell << "\t";
+			std::cout << std::endl;
 		}
-		std::cout << std::endl;
 	}
 	return os;
 }
