@@ -4,6 +4,9 @@
 #include <vector>
 #include <iostream>
 #include <exception>
+
+#include "Complex.h"
+
 // TODO use cols()
 using std::vector;
 
@@ -22,6 +25,7 @@ public:
 	Matrix<T> operator*(const Matrix<T> &other) const;
 	bool operator==(const Matrix<T> &other) const;
 	bool operator!=(const Matrix<T> &other) const;
+	Matrix<T> operator-() const;
 
 	Matrix<T> trans() const;
 	bool isSquareMatrix() const;
@@ -67,7 +71,7 @@ Matrix<T>::Matrix(unsigned int rows, unsigned int cols)
 template <class T>
 Matrix<T>::Matrix(const Matrix<T> &other)
 {
-	_cols = other._cols;
+	_cols = other.cols();
 	values = other.values;
 }
 
@@ -76,18 +80,14 @@ Matrix<T>::Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells) 
 {
 	int row;
 	int col;
-	// TODO is this the best way?
-	for (int i = 0; i < cells.size(); i++)
-	{
-		values.push_back(cells.at(i));
-	}
+	values = cells;
 	this->_cols = cols;
 }
 
 template <class T>
 Matrix<T>& Matrix<T>::operator=(const Matrix<T> &other)
 {
-	_cols = other._cols;
+	_cols = other.cols();
 	values = other.values;
 	return *this;
 }
@@ -95,13 +95,12 @@ Matrix<T>& Matrix<T>::operator=(const Matrix<T> &other)
 template <class T>
 Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 {
-        // TODO check for size 0?
         if(other.values.size() != values.size())
         {
                 throw std::invalid_argument("Matrices sizes don't match");
         }
-        int cols = other._cols;
-        int rows = other.values.size() / cols;
+        int cols = other.cols();
+        int rows = other.rows();
 	vector<T> newValues = values;
 	for(int i = 0; i < values.size(); i++)
 	{
@@ -114,32 +113,20 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 template <class T>
 Matrix<T> Matrix<T>::operator-(const Matrix<T> &other) const
 {
-	// TODO merge with operator+
-        if(other.values.size() != values.size())
-        {
-                throw std::invalid_argument("Matrices sizes don't match");
-        }
-        int cols = other._cols;
-        int rows = other.values.size() / cols;
-        vector<T> newValues = values;
-        for(int i = 0; i < values.size(); i++)
-        {
-                values.at(i) -= other.values.at(i);
-        }
-        Matrix<T> newMatrix(rows, cols, newValues);
-        return newMatrix;
-
+	return (*this) + (-other);
 }
 
 template <class T>
 Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const
 {
-	// TODO check sizes
-	int rowsNum = rows();
-	Matrix<T> result(rowsNum, other._cols);
-	for(int i = 0; i < rowsNum; i++)
+	if(cols() != other.rows())
 	{
-		for(int j = 0; j < other._cols; j++)
+		throw std::invalid_argument("Sizes cannot be multiplied!");
+	}
+	Matrix<T> result(rows(), other.cols());
+	for(int i = 0; i < rows(); i++)
+	{
+		for(int j = 0; j < other.cols(); j++)
 		{
 			T sum;
 			for(int k = 0; k < cols(); k++)
@@ -165,6 +152,17 @@ bool Matrix<T>::operator!=(const Matrix<T> &other) const
 }
 
 template <class T>
+Matrix<T> Matrix<T>::operator-() const
+{
+	vector<T> newValues;
+	for(T value: values)
+	{
+		newValues.push_back(-value);
+	}
+	Matrix<T> newMatrix(rows(), cols(), newValues);
+	return newMatrix;
+}
+template <class T>
 Matrix<T> Matrix<T>::trans() const
 {
 	if (!isSquareMatrix())
@@ -172,8 +170,14 @@ Matrix<T> Matrix<T>::trans() const
 		throw std::invalid_argument("Matrix must be square");
 	}
 	Matrix<T> resultMatrix;
+	for(int i = 0; i < rows(); i++)
+	{
+		for(int j = 0; j < cols(); j++)
+		{
+			resultMatrix(i, j) = (*this)(j, i);
+		}
+	}
 	return resultMatrix;
-	// TODO implement
 }
 
 template <class T>
@@ -185,14 +189,14 @@ bool Matrix<T>::isSquareMatrix() const
 template <class T>
 T Matrix<T>::operator()(unsigned int row, unsigned int col) const
 {
-	return values.at(row * _cols + col);
+	return values.at(row * cols() + col);
 }
 
 
 template <class T>
 T& Matrix<T>::operator()(unsigned int row, unsigned int col)
 {
-	return values.at(row * _cols + col);
+	return values.at(row * cols() + col);
 }
 
 template <class T>
@@ -210,8 +214,8 @@ typename std::vector<T>::const_iterator Matrix<T>::end() const
 template <class T>
 vector<T> Matrix<T>::getRow(int row) const
 {
-	auto start = values.begin() + row * _cols;
-	auto end = values.begin + (row + 1) * _cols;
+	auto start = values.begin() + row * cols();
+	auto end = values.begin + (row + 1) * cols();
 	vector<T> result(start, end);
 	return result;
 }
@@ -230,7 +234,7 @@ vector<T> Matrix<T>::getCol(int col) const
 template <class T>
 int Matrix<T>::rows() const
 {
-	return values.size() / _cols;
+	return values.size() / cols();
 }
 
 template <class T>
@@ -245,12 +249,32 @@ std::ostream& operator<<(std::ostream &os, const Matrix<T> &mat)
 	for(unsigned long int i = 0; i < mat.values.size(); i++)
 	{
 		std::cout << mat.values.at(i) << "\t";
-		if((i + 1) % mat._cols == 0)
+		if((i + 1) % mat.cols() == 0)
 		{
 			std::cout << std::endl;
 		}
 	}
 	return os;
+}
+
+
+template<>
+Matrix<Complex> Matrix<Complex>::trans() const
+{
+        if (!isSquareMatrix())
+        {
+                throw std::invalid_argument("Matrix must be square");
+        }
+        Matrix<Complex> resultMatrix;
+        for(int i = 0; i < rows(); i++)
+        {
+                for(int j = 0; j < cols(); j++)
+                {
+                        resultMatrix(i, j) = (*this)(j, i).conj();
+                }
+        }
+        return resultMatrix;
+
 }
 
 #endif //MATRIX_HPP
