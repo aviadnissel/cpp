@@ -14,6 +14,7 @@ template <class T>
 class Matrix
 {
 public:
+	typedef typename std::vector<T>::const_iterator const_iterator;
 	
 	Matrix<T>();
 	Matrix<T>(unsigned int rows, unsigned int cols);
@@ -34,8 +35,8 @@ public:
 	T operator()(unsigned int row, unsigned int col) const;
 	T& operator()(unsigned int row, unsigned int col);
 
-	typename std::vector<T>::const_iterator begin() const;
-	typename std::vector<T>::const_iterator end() const;
+	const_iterator begin() const;
+	const_iterator end() const;
 
 	unsigned int rows() const;
 	unsigned int cols() const;
@@ -45,8 +46,8 @@ public:
 
 
 private:
-	vector<T> getRow(int row) const;
-	vector<T> getCol(int col) const;
+	vector<T> getRow(unsigned int row) const;
+	vector<T> getCol(unsigned int col) const;
 	vector<T> values;
 	unsigned int _cols;
 
@@ -103,10 +104,10 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 	{
 		throw std::invalid_argument("Matrices not the same size +");
 	}
-	int cols = other.cols();
-	int rows = other.rows();
+	unsigned int cols = other.cols();
+	unsigned int rows = other.rows();
 	vector<T> newValues = values;
-	for(int i = 0; i < values.size(); i++)
+	for(unsigned int i = 0; i < values.size(); i++)
 	{
 		newValues[i] += other.values.at(i);;
 	}
@@ -133,12 +134,12 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const
 		throw std::invalid_argument("Matrices not fitting size *");
 	}
 	Matrix<T> result(rows(), other.cols());
-	for(int i = 0; i < rows(); i++)
+	for(unsigned int i = 0; i < rows(); i++)
 	{
-		for(int j = 0; j < other.cols(); j++)
+		for(unsigned int j = 0; j < other.cols(); j++)
 		{
 			T sum;
-			for(int k = 0; k < cols(); k++)
+			for(unsigned int k = 0; k < cols(); k++)
 			{
 				sum += (*this)(i, k) * other(k, j);
 			}
@@ -179,9 +180,9 @@ Matrix<T> Matrix<T>::trans() const
 		throw std::invalid_argument("matrix is not squared");
 	}
 	Matrix<T> resultMatrix;
-	for(int i = 0; i < rows(); i++)
+	for(unsigned int i = 0; i < rows(); i++)
 	{
-		for(int j = 0; j < cols(); j++)
+		for(unsigned int j = 0; j < cols(); j++)
 		{
 			resultMatrix(i, j) = (*this)(j, i);
 		}
@@ -217,19 +218,19 @@ T& Matrix<T>::operator()(unsigned int row, unsigned int col)
 }
 
 template <class T>
-typename std::vector<T>::const_iterator Matrix<T>::begin() const
+typename Matrix<T>::const_iterator Matrix<T>::begin() const
 {
 	return values.cbegin();
 }
 
 template <class T>
-typename std::vector<T>::const_iterator Matrix<T>::end() const
+typename Matrix<T>::const_iterator Matrix<T>::end() const
 {
 	return values.cend();
 }
 
 template <class T>
-vector<T> Matrix<T>::getRow(int row) const
+vector<T> Matrix<T>::getRow(unsigned int row) const
 {
 	auto start = values.begin() + row * cols();
 	auto end = values.begin + (row + 1) * cols();
@@ -238,10 +239,10 @@ vector<T> Matrix<T>::getRow(int row) const
 }
 
 template <class T>
-vector<T> Matrix<T>::getCol(int col) const
+vector<T> Matrix<T>::getCol(unsigned int col) const
 {
 	vector<T> result;
-	for(int i = 0; i < rows; i++)
+	for(unsigned int i = 0; i < rows; i++)
 	{
 		result.push_back((*this)(i, col));
 	}
@@ -263,7 +264,7 @@ unsigned int Matrix<T>::cols() const
 template <class T>
 std::ostream& operator<<(std::ostream &os, const Matrix<T> &mat)
 {
-	for(unsigned long int i = 0; i < mat.values.size(); i++)
+	for(unsigned int i = 0; i < mat.values.size(); i++)
 	{
 		std::cout << mat.values.at(i) << "\t";
 		if((i + 1) % mat.cols() == 0)
