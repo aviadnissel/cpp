@@ -10,6 +10,7 @@ using std::vector;
 template <class T>
 class Matrix {
 public:
+	
 	Matrix<T>();
 	Matrix<T>(unsigned int rows, unsigned int cols);
 	Matrix<T>(const Matrix<T>& other);
@@ -28,8 +29,8 @@ public:
 	T operator()(unsigned int row, unsigned int col) const;
 	T& operator()(unsigned int row, unsigned int col);
 
-//	vector<T>::const_iterator begin() const;
-//	vector<T>::const_iterator end() const;
+	typename std::vector<T>::const_iterator begin() const;
+	typename std::vector<T>::const_iterator end() const;
 
 	int rows() const;
 	int cols() const;
@@ -104,7 +105,7 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 	vector<T> newValues = values;
 	for(int i = 0; i < values.size(); i++)
 	{
-		values.at(i) += other.values.at(i);
+		newValues[i] += other.values.at(i);;
 	}
 	Matrix<T> newMatrix(rows, cols, newValues);
 	return newMatrix;
@@ -140,7 +141,12 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const
 	{
 		for(int j = 0; j < other._cols; j++)
 		{
-			result(i, j) = getRow(i) * other.getCol(j);
+			T sum;
+			for(int k = 0; k < cols(); k++)
+			{
+				sum += (*this)(i, k) * other(k, j);
+			}
+			result(i, j) = sum;
 		}
 	}
 	return result;
@@ -188,19 +194,19 @@ T& Matrix<T>::operator()(unsigned int row, unsigned int col)
 {
 	return values.at(row * _cols + col);
 }
-/*
+
 template <class T>
-vector<T>::const_iterator Matrix<T>::begin() const
+typename std::vector<T>::const_iterator Matrix<T>::begin() const
 {
 	return values.cbegin();
 }
 
 template <class T>
-vector<T>::const_iterator Matrix<T>::end() const
+typename std::vector<T>::const_iterator Matrix<T>::end() const
 {
 	return values.cend();
 }
-*/
+
 template <class T>
 vector<T> Matrix<T>::getRow(int row) const
 {
