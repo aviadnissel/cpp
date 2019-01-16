@@ -11,7 +11,8 @@
 using std::vector;
 
 template <class T>
-class Matrix {
+class Matrix
+{
 public:
 	
 	Matrix<T>();
@@ -36,8 +37,8 @@ public:
 	typename std::vector<T>::const_iterator begin() const;
 	typename std::vector<T>::const_iterator end() const;
 
-	int rows() const;
-	int cols() const;
+	unsigned int rows() const;
+	unsigned int cols() const;
 
 	template <class S>
 	friend std::ostream& operator<<(std::ostream &os, const Matrix<S> &mat);
@@ -47,7 +48,7 @@ private:
 	vector<T> getRow(int row) const;
 	vector<T> getCol(int col) const;
 	vector<T> values;
-	int _cols;
+	unsigned int _cols;
 
 };
 
@@ -63,6 +64,7 @@ Matrix<T>::Matrix(unsigned int rows, unsigned int cols)
 {
 	for(unsigned int i = 0; i < rows * cols; i++)
 	{
+		std::cout << i << std::endl;
 		values.push_back(T(0));
 	}
 	this->_cols = cols;
@@ -78,8 +80,10 @@ Matrix<T>::Matrix(const Matrix<T> &other)
 template <class T>
 Matrix<T>::Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells) : Matrix(rows, cols)
 {
-	int row;
-	int col;
+	if (cells.size() != rows * cols)
+	{
+		throw std::invalid_argument("allocation problem");
+	}
 	values = cells;
 	this->_cols = cols;
 }
@@ -95,12 +99,12 @@ Matrix<T>& Matrix<T>::operator=(const Matrix<T> &other)
 template <class T>
 Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 {
-        if(other.values.size() != values.size())
-        {
-                throw std::invalid_argument("Matrices sizes don't match");
-        }
-        int cols = other.cols();
-        int rows = other.rows();
+	if(other.values.size() != values.size())
+	{
+		throw std::invalid_argument("Matrices not the same size +");
+	}
+	int cols = other.cols();
+	int rows = other.rows();
 	vector<T> newValues = values;
 	for(int i = 0; i < values.size(); i++)
 	{
@@ -113,6 +117,11 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 template <class T>
 Matrix<T> Matrix<T>::operator-(const Matrix<T> &other) const
 {
+	if(other.values.size() != values.size())
+	{
+		throw std::invalid_argument("Matrices not the same size -");
+	}
+
 	return (*this) + (-other);
 }
 
@@ -121,7 +130,7 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const
 {
 	if(cols() != other.rows())
 	{
-		throw std::invalid_argument("Sizes cannot be multiplied!");
+		throw std::invalid_argument("Matrices not fitting size *");
 	}
 	Matrix<T> result(rows(), other.cols());
 	for(int i = 0; i < rows(); i++)
@@ -167,7 +176,7 @@ Matrix<T> Matrix<T>::trans() const
 {
 	if (!isSquareMatrix())
 	{
-		throw std::invalid_argument("Matrix must be square");
+		throw std::invalid_argument("matrix is not squared");
 	}
 	Matrix<T> resultMatrix;
 	for(int i = 0; i < rows(); i++)
@@ -189,6 +198,10 @@ bool Matrix<T>::isSquareMatrix() const
 template <class T>
 T Matrix<T>::operator()(unsigned int row, unsigned int col) const
 {
+	if (row >= rows() || col >= cols())
+	{
+		throw std::out_of_range("array index out of bounds");
+	}
 	return values.at(row * cols() + col);
 }
 
@@ -196,6 +209,10 @@ T Matrix<T>::operator()(unsigned int row, unsigned int col) const
 template <class T>
 T& Matrix<T>::operator()(unsigned int row, unsigned int col)
 {
+	if (row >= rows() || col >= cols())
+	{
+		throw std::out_of_range("array index out of bounds");
+	}
 	return values.at(row * cols() + col);
 }
 
@@ -232,13 +249,13 @@ vector<T> Matrix<T>::getCol(int col) const
 }
 
 template <class T>
-int Matrix<T>::rows() const
+unsigned int Matrix<T>::rows() const
 {
 	return values.size() / cols();
 }
 
 template <class T>
-int Matrix<T>::cols() const
+unsigned int Matrix<T>::cols() const
 {
 	return _cols;
 }
@@ -261,19 +278,19 @@ std::ostream& operator<<(std::ostream &os, const Matrix<T> &mat)
 template<>
 Matrix<Complex> Matrix<Complex>::trans() const
 {
-        if (!isSquareMatrix())
-        {
-                throw std::invalid_argument("Matrix must be square");
-        }
-        Matrix<Complex> resultMatrix;
-        for(int i = 0; i < rows(); i++)
-        {
-                for(int j = 0; j < cols(); j++)
-                {
-                        resultMatrix(i, j) = (*this)(j, i).conj();
-                }
-        }
-        return resultMatrix;
+	if (!isSquareMatrix())
+	{
+			throw std::invalid_argument("matrix is not squared (Complex)");
+	}
+	Matrix<Complex> resultMatrix;
+	for(unsigned int i = 0; i < rows(); i++)
+	{
+			for(unsigned int j = 0; j < cols(); j++)
+			{
+					resultMatrix(i, j) = (*this)(j, i).conj();
+			}
+	}
+	return resultMatrix;
 
 }
 
