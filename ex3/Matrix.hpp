@@ -23,6 +23,8 @@ using std::vector;
 
 /**
  * A generic matrix.
+ *
+ * @tparam T The type of the cells in the matrix.
  */
 template <class T>
 class Matrix
@@ -37,39 +39,177 @@ public:
 
 	/**
 	 * Constructs a new matrix with the given size. All values are 0.
+	 *
+	 * @param rows The number of rows.
+	 * @param cols The number of columns.
 	 */
 	Matrix(unsigned int rows, unsigned int cols);
+
+	/**
+	 * Copy constructor.
+	 *
+	 * @param other The other matrix.
+	 */
 	Matrix(const Matrix<T>& other);
+
+	/**
+	 * Constructs a matrix with the given size, and given values.
+	 * (Values order is (0,1) (0,2) ... (1,0) (1,1) ...
+	 *
+	 * @param rows The number of rows
+	 * @param cols The number of columns.
+	 * @param cells A vector of values, in the order above.
+	 */
 	Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells);
 
+	/**
+	 * Assignment operator.
+	 *
+	 * @param other The other matrix.
+	 * @return A reference to the current (changed) matrix.
+	 */
 	Matrix& operator=(const Matrix<T> &other);
+
+	/**
+	 * Plus operator.
+	 *
+	 * @param other The other matrix.
+	 * @return The result matrix.
+	 */
 	Matrix operator+(const Matrix<T> &other) const;
+
+    /**
+     * Minus operator.
+     *
+     * @param other The other matrix.
+     * @return The result matrix.
+     */
 	Matrix operator-(const Matrix<T> &other) const;
+
+    /**
+     * Multiply operator.
+     *
+     * @param other The other matrix.
+     * @return The result matrix.
+     */
 	Matrix operator*(const Matrix<T> &other) const;
+
+	/**
+	 * Equal operator.
+	 *
+	 * @param other The other matrix.
+	 * @return True if matrices are equal, false otherwise.
+	 */
 	bool operator==(const Matrix<T> &other) const;
+
+    /**
+     * Unequal operator.
+     *
+     * @param other The other matrix.
+     * @return True if matrices are unequal, false otherwise.
+     */
 	bool operator!=(const Matrix<T> &other) const;
+
+	/**
+	 * Minus operator.
+	 *
+	 * @return This matrix, with a minus sign.
+	 */
 	Matrix operator-() const;
 
+	/**
+	 * Transposes the matrix.
+	 *
+	 * @return The new transposed matrix.
+	 */
 	Matrix trans() const;
+
+	/**
+	 * Checks if the matrix is a square matrix.
+	 *
+	 * @return True if the matrix is square, false othewise.
+	 */
 	bool isSquareMatrix() const;
 
+	/**
+	 * Access operator.
+	 *
+	 * @param row The row to access.
+	 * @param col The column to access.
+	 * @return The value in given cell.
+	 */
 	T operator()(unsigned int row, unsigned int col) const;
+
+	/**
+	 * Access operator.
+	 *
+	 * @param row The row to access.
+	 * @param col The column to access.
+	 * @return A reference to the given cell.
+	 */
 	T& operator()(unsigned int row, unsigned int col);
 
+	/**
+	 * Begin iterator.
+	 *
+	 * @return A const_iterator to the beginning of the matrix.
+	 */
 	const_iterator begin() const;
+
+    /**
+     * End iterator.
+     *
+     * @return A const_iterator to the end of the matrix.
+     */
 	const_iterator end() const;
 
+	/**
+	 * Getter for the number of rows in the matrix.
+	 *
+	 * @return The number of rows in the matrix.
+	 */
 	unsigned int rows() const;
+
+    /**
+     * Getter for the number of columns in the matrix.
+     *
+     * @return The number of columns in the matrix.
+     */
 	unsigned int cols() const;
 
+    /**
+     * << operator.
+     *
+     * @tparam S the type of the matrix.
+     * @param is The output stream.
+     * @param mat The matrix.
+     * @return Reference to the original output stream.
+     */
 	template <class S>
 	friend std::ostream& operator<<(std::ostream &os, const Matrix<S> &mat);
 
 
 private:
+    /**
+     * Getter for the specific row.
+     *
+     * @param row The row to get.
+     * @return A vector representing the row.
+     */
 	vector<T> getRow(unsigned int row) const;
+
+    /**
+     * Getter for the specific column.
+     *
+     * @param row The column to get.
+     * @return A vector representing the column.
+     */
 	vector<T> getCol(unsigned int col) const;
+
+	/** The values of the matrix. */
 	vector<T> values;
+
+	/** the number of columns the matrix have. */
 	unsigned int _cols;
 
 };
