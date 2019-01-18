@@ -196,7 +196,7 @@ private:
      * @param row The row to get.
      * @return A vector representing the row.
      */
-	vector<T> getRow(unsigned int row) const;
+	vector<T> _getRow(unsigned int row) const;
 
     /**
      * Getter for the specific column.
@@ -204,7 +204,7 @@ private:
      * @param row The column to get.
      * @return A vector representing the column.
      */
-	vector<T> getCol(unsigned int col) const;
+	vector<T> _getCol(unsigned int col) const;
 
 	/** The values of the matrix. */
 	vector<T> values;
@@ -217,6 +217,9 @@ private:
 
 /* --- Method Impl. --- */
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T>::Matrix()
 {
@@ -224,6 +227,9 @@ Matrix<T>::Matrix()
 	_cols = 1;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T>::Matrix(unsigned int rows, unsigned int cols)
 {
@@ -234,6 +240,9 @@ Matrix<T>::Matrix(unsigned int rows, unsigned int cols)
 	this->_cols = cols;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T>::Matrix(const Matrix<T> &other)
 {
@@ -241,6 +250,9 @@ Matrix<T>::Matrix(const Matrix<T> &other)
 	values = other.values;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T>::Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells) : Matrix(rows, cols)
 {
@@ -252,6 +264,9 @@ Matrix<T>::Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells) 
 	this->_cols = cols;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T>& Matrix<T>::operator=(const Matrix<T> &other)
 {
@@ -260,6 +275,9 @@ Matrix<T>& Matrix<T>::operator=(const Matrix<T> &other)
 	return *this;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 {
@@ -278,6 +296,9 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 	return newMatrix;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T> Matrix<T>::operator-(const Matrix<T> &other) const
 {
@@ -289,6 +310,9 @@ Matrix<T> Matrix<T>::operator-(const Matrix<T> &other) const
 	return (*this) + (-other);
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const
 {
@@ -312,18 +336,27 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const
 	return result;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 bool Matrix<T>::operator==(const Matrix<T> &other) const
 {
 	return values == other.values;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 bool Matrix<T>::operator!=(const Matrix<T> &other) const
 {
 	return !((*this) == other);
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T> Matrix<T>::operator-() const
 {
@@ -335,6 +368,10 @@ Matrix<T> Matrix<T>::operator-() const
 	Matrix<T> newMatrix(rows(), cols(), newValues);
 	return newMatrix;
 }
+
+/**
+ * See class definition.
+ */
 template <class T>
 Matrix<T> Matrix<T>::trans() const
 {
@@ -353,12 +390,18 @@ Matrix<T> Matrix<T>::trans() const
 	return resultMatrix;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 bool Matrix<T>::isSquareMatrix() const
 {
 	return _cols == rows();
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 T Matrix<T>::operator()(unsigned int row, unsigned int col) const
 {
@@ -369,7 +412,9 @@ T Matrix<T>::operator()(unsigned int row, unsigned int col) const
 	return values.at(row * cols() + col);
 }
 
-
+/**
+ * See class definition.
+ */
 template <class T>
 T& Matrix<T>::operator()(unsigned int row, unsigned int col)
 {
@@ -380,20 +425,29 @@ T& Matrix<T>::operator()(unsigned int row, unsigned int col)
 	return values.at(row * cols() + col);
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 typename Matrix<T>::const_iterator Matrix<T>::begin() const
 {
 	return values.cbegin();
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 typename Matrix<T>::const_iterator Matrix<T>::end() const
 {
 	return values.cend();
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
-vector<T> Matrix<T>::getRow(unsigned int row) const
+vector<T> Matrix<T>::_getRow(unsigned int row) const
 {
 	auto start = values.begin() + row * cols();
 	auto end = values.begin + (row + 1) * cols();
@@ -401,8 +455,11 @@ vector<T> Matrix<T>::getRow(unsigned int row) const
 	return result;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
-vector<T> Matrix<T>::getCol(unsigned int col) const
+vector<T> Matrix<T>::_getCol(unsigned int col) const
 {
 	vector<T> result;
 	for(unsigned int i = 0; i < rows; i++)
@@ -412,18 +469,27 @@ vector<T> Matrix<T>::getCol(unsigned int col) const
 	return result;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 unsigned int Matrix<T>::rows() const
 {
 	return values.size() / cols();
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 unsigned int Matrix<T>::cols() const
 {
 	return _cols;
 }
 
+/**
+ * See class definition.
+ */
 template <class T>
 std::ostream& operator<<(std::ostream &os, const Matrix<T> &mat)
 {
@@ -438,7 +504,9 @@ std::ostream& operator<<(std::ostream &os, const Matrix<T> &mat)
 	return os;
 }
 
-
+/**
+ * See class definition.
+ */
 template<>
 Matrix<Complex> Matrix<Complex>::trans() const
 {
