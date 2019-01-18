@@ -1,0 +1,7 @@
+	50x50				500x500
+	+		*		+		*
+Serial	49995		3450620		4219653		3170001008
+Library	118		396		124		404
+
+The program runs faster with the library implementation, probably because it's more optimized, uses different algorithms, and multithreads.
+The program runs a lot slower when multiplying, because adding runs in O(n*n) while multiplying runs in O(n*n*n)

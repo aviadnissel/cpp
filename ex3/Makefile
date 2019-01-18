@@ -1,6 +1,6 @@
 CXX = g++
 OBJECTS = Complex.o
-FLAGS = -Wextra -Wall -std=c++17
+FLAGS = -Wextra -Wall -std=c++11 -pthread -O -g
 TARFILES = TimeChecker.cpp Matrix.hpp README Makefile
 TIMES_TO_RUN = 500
 

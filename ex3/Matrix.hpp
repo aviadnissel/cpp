@@ -7,7 +7,6 @@
 
 #include "Complex.h"
 
-// TODO use cols()
 using std::vector;
 
 template <class T>
@@ -16,20 +15,20 @@ class Matrix
 public:
 	typedef typename std::vector<T>::const_iterator const_iterator;
 	
-	Matrix<T>();
-	Matrix<T>(unsigned int rows, unsigned int cols);
-	Matrix<T>(const Matrix<T>& other);
+	Matrix();
+	Matrix(unsigned int rows, unsigned int cols);
+	Matrix(const Matrix<T>& other);
 	Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells);
 
-	Matrix<T>& operator=(const Matrix<T> &other);
-	Matrix<T> operator+(const Matrix<T> &other) const;
-	Matrix<T> operator-(const Matrix<T> &other) const;
-	Matrix<T> operator*(const Matrix<T> &other) const;
+	Matrix& operator=(const Matrix<T> &other);
+	Matrix operator+(const Matrix<T> &other) const;
+	Matrix operator-(const Matrix<T> &other) const;
+	Matrix operator*(const Matrix<T> &other) const;
 	bool operator==(const Matrix<T> &other) const;
 	bool operator!=(const Matrix<T> &other) const;
-	Matrix<T> operator-() const;
+	Matrix operator-() const;
 
-	Matrix<T> trans() const;
+	Matrix trans() const;
 	bool isSquareMatrix() const;
 
 	T operator()(unsigned int row, unsigned int col) const;
@@ -108,7 +107,7 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &other) const
 	vector<T> newValues = values;
 	for(unsigned int i = 0; i < values.size(); i++)
 	{
-		newValues[i] += other.values.at(i);;
+		newValues.at(i) += other.values.at(i);
 	}
 	Matrix<T> newMatrix(rows, cols, newValues);
 	return newMatrix;
@@ -137,7 +136,7 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> &other) const
 	{
 		for(unsigned int j = 0; j < other.cols(); j++)
 		{
-			T sum;
+			T sum(0);
 			for(unsigned int k = 0; k < cols(); k++)
 			{
 				sum += (*this)(i, k) * other(k, j);
@@ -285,10 +284,10 @@ Matrix<Complex> Matrix<Complex>::trans() const
 	Matrix<Complex> resultMatrix;
 	for(unsigned int i = 0; i < rows(); i++)
 	{
-			for(unsigned int j = 0; j < cols(); j++)
-			{
-					resultMatrix(i, j) = (*this)(j, i).conj();
-			}
+		for(unsigned int j = 0; j < cols(); j++)
+		{
+			resultMatrix(i, j) = (*this)(j, i).conj();
+		}
 	}
 	return resultMatrix;
 
