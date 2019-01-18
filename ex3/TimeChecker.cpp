@@ -1,3 +1,14 @@
+/**
+ * @file TimeChecker.cpp
+ * @author Aviad Nissel <aviad.nissel@mail.huji.ac.il>
+ *
+ * Checks times for matrix addition and multiplication,
+ * for both eigen and Matrix.hpp implementation.
+ */
+
+
+/* --- Includes --- */
+
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -9,6 +20,17 @@ using std::cerr;
 using std::endl;
 using Eigen::MatrixXd;
 
+
+/* --- Main --- */
+
+/**
+ * The main function.
+ *
+ * @param argc The number of arguments.
+ * @param argv A list of arguments.
+ * @return 0 in case of success, 1 in case of bad usage,
+ * 		   2 in case of invalid size argument.
+ */
 int main(int argc, char* argv[])
 {
 	if (argc != 2)
