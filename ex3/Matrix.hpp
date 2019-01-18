@@ -1,21 +1,43 @@
+/**
+ * @file Matrix.hpp
+ * @author Aviad Nissel <aviad.nissel@mail.huji.ac.il>
+ *
+ * A generic matrix class.
+ */
+
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
+
+
+/* --- Includes --- */
 
 #include <vector>
 #include <iostream>
 #include <exception>
-
 #include "Complex.h"
 
 using std::vector;
 
+
+/* --- Class --- */
+
+/**
+ * A generic matrix.
+ */
 template <class T>
 class Matrix
 {
 public:
 	typedef typename std::vector<T>::const_iterator const_iterator;
-	
+
+	/**
+	 * Default constructor. Constructs a 1x1 matrix with value 0.
+	 */	
 	Matrix();
+
+	/**
+	 * Constructs a new matrix with the given size. All values are 0.
+	 */
 	Matrix(unsigned int rows, unsigned int cols);
 	Matrix(const Matrix<T>& other);
 	Matrix(unsigned int rows, unsigned int cols, const vector<T>& cells);
@@ -51,6 +73,9 @@ private:
 	unsigned int _cols;
 
 };
+
+
+/* --- Method Impl. --- */
 
 template <class T>
 Matrix<T>::Matrix()
