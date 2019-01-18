@@ -65,7 +65,6 @@ Matrix<T>::Matrix(unsigned int rows, unsigned int cols)
 {
 	for(unsigned int i = 0; i < rows * cols; i++)
 	{
-		std::cout << i << std::endl;
 		values.push_back(T(0));
 	}
 	this->_cols = cols;
